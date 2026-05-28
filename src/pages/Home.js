@@ -1,7 +1,15 @@
 function Home() {
   return (
-    <div>
-      <h2>Home Page</h2>
+    <div className="page-container">
+
+      <h1>
+        Welcome to Event Booking System
+      </h1>
+
+      <p>
+        Book events easily online.
+      </p>
+
     </div>
   );
 }
