@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import API from "../services/api";
 
 function Login() {
@@ -12,6 +14,8 @@ function Login() {
 
   const [message, setMessage] =
     useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
 
@@ -42,6 +46,8 @@ function Login() {
         "Login successful"
       );
 
+      navigate("/events");
+
     }
     catch (error) {
 
@@ -67,6 +73,7 @@ function Login() {
           onChange={(e) =>
             setEmailId(e.target.value)
           }
+          required
         />
 
         <input
@@ -76,6 +83,7 @@ function Login() {
           onChange={(e) =>
             setPassword(e.target.value)
           }
+          required
         />
 
         <button type="submit">

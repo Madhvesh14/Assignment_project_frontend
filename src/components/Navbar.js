@@ -1,30 +1,37 @@
 import { Link } from "react-router-dom";
 
+import "../styles/Navbar.css";
+
 function Navbar() {
+
   return (
-    <nav className="navbar">
+    <div>
 
-      <h2 className="logo">
-        Event Booking
-      </h2>
+      <nav className="navbar">
 
-      <ul className="nav-links">
+        <h2 className="logo">
+          Event Booking
+        </h2>
 
-        <li>
-          <Link to="/">Home</Link>
-        </li>
+        <div className="navbar-right">
 
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
+        
+          <Link to="/register">
+            Register
+          </Link>
 
-        <li>
-          <Link to="/register">Register</Link>
-        </li>
 
-      </ul>
+           <Link to="/login">
+            Login
+          </Link>
 
-    </nav>
+        </div>
+
+      </nav>
+
+      
+
+    </div>
   );
 }
 
