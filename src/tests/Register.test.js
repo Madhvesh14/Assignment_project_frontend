@@ -1,15 +1,37 @@
-import "@testing-library/jest-dom";
-
 import { render, screen } from "@testing-library/react";
+
+import { BrowserRouter } from "react-router-dom";
 
 import Register from "../pages/Register";
 
-test("renders register heading", () => {
-  render(<Register />);
+describe("Register Component", () => {
 
-  const heading = screen.getByRole("heading", {
-    name: /Register/i,
+  test("renders register heading", () => {
+
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+
+    const heading = screen.getByRole("heading", {
+      name: /register/i,
+    });
+
+    expect(heading).toBeInTheDocument();
   });
 
-  expect(heading).toBeInTheDocument();
+  test("renders fullname input", () => {
+
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+
+    const fullnameInput = screen.getByPlaceholderText(/enter full name/i);
+
+    expect(fullnameInput).toBeInTheDocument();
+  });
+
 });

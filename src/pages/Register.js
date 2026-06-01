@@ -1,65 +1,48 @@
 import { useState } from "react";
 
-import API from "../services/api";
+import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
 
 function Register() {
+  const [fullName, setFullName] = useState("");
 
-  const [fullName, setFullName] =
-    useState("");
+  const [email, setEmail] = useState("");
 
-  const [emailId, setEmailId] =
-    useState("");
+  const [password, setPassword] = useState("");
 
-  const [password, setPassword] =
-    useState("");
+  const [roleId, setRoleId] = useState(2);
 
-  const [roleId, setRoleId] =
-    useState("2");
-
-  const [message, setMessage] =
-    useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     try {
-
-      const response =
-        await API.post(
-          "/Auth/register",
-          {
-            fullName,
-            emailId,
-            password,
-            roleId: parseInt(roleId)
-          }
-        );
-
-      setMessage(response.data);
-
-      setFullName("");
-      setEmailId("");
-      setPassword("");
-
-    }
-    catch (error) {
-
-      console.log(error);
-
-      setMessage(
-        "Registration failed"
+      await axios.post("http://localhost:5226/api/auth/register",
+        {
+          fullName,
+          emailId: email,
+          password,
+          roleId,
+        }
       );
+
+      alert(
+        "Registration Successful"
+      );
+
+      navigate("/login");
+    } catch (error) {
+      alert("Registration Failed");
     }
   };
 
   return (
     <div className="form-container">
-
       <h2>Register</h2>
 
       <form onSubmit={handleSubmit}>
-
         <input
           type="text"
           placeholder="Enter full name"
@@ -67,15 +50,17 @@ function Register() {
           onChange={(e) =>
             setFullName(e.target.value)
           }
+          required
         />
 
         <input
           type="email"
           placeholder="Enter email"
-          value={emailId}
+          value={email}
           onChange={(e) =>
-            setEmailId(e.target.value)
+            setEmail(e.target.value)
           }
+          required
         />
 
         <input
@@ -85,33 +70,30 @@ function Register() {
           onChange={(e) =>
             setPassword(e.target.value)
           }
+          required
         />
 
         <select
           value={roleId}
           onChange={(e) =>
-            setRoleId(e.target.value)
+            setRoleId(
+              Number(e.target.value)
+            )
           }
         >
-
-          <option value="1">
+          <option value={1}>
             Admin
           </option>
 
-          <option value="2">
+          <option value={2}>
             User
           </option>
-
         </select>
 
         <button type="submit">
           Register
         </button>
-
       </form>
-
-      <p>{message}</p>
-
     </div>
   );
 }

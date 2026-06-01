@@ -1,0 +1,133 @@
+.events-container {
+
+  padding: 30px;
+}
+
+.events-container h1 {
+
+  margin-bottom: 20px;
+}
+
+.search-box {
+
+  padding: 10px;
+
+  width: 250px;
+
+  border-radius: 5px;
+
+  border: 1px solid #ccc;
+
+  margin-bottom: 30px;
+
+  font-size: 16px;
+}
+
+.event-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(300px, 1fr));
+
+  gap: 20px;
+}
+
+.event-card {
+
+  border: 1px solid #ddd;
+
+  border-radius: 10px;
+
+  padding: 20px;
+
+  box-shadow:
+    0px 2px 8px rgba(0,0,0,0.1);
+
+  background-color: white;
+}
+
+.event-card h2 {
+
+  margin-bottom: 10px;
+}
+
+.admin-btn {
+
+  padding: 10px 20px;
+
+  background-color: green;
+
+  color: white;
+
+  border: none;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  margin-right: 20px;
+
+  margin-bottom: 20px;
+}
+
+.admin-buttons {
+
+  display: flex;
+
+  gap: 10px;
+
+  margin-top: 15px;
+}
+
+.admin-buttons button {
+
+  padding: 8px 15px;
+
+  border: none;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  background-color: #007bff;
+
+  color: white;
+}
+
+.event-form {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+  margin-bottom: 30px;
+
+  max-width: 400px;
+}
+
+.event-form input {
+
+  padding: 10px;
+
+  border: 1px solid #ccc;
+
+  border-radius: 5px;
+}
+
+.event-form button {
+
+  padding: 10px;
+
+  background-color: green;
+
+  color: white;
+
+  border: none;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+}
