@@ -14,6 +14,10 @@ import AddEvent from "./pages/AddEvent";
 
 import UpdateEvent from "./pages/UpdateEvent";
 
+import CreateBooking from "./pages/CreateBooking";
+
+import MyBookings from "./pages/MyBookings";
+
 function App() {
 
   return (
@@ -51,6 +55,14 @@ function App() {
         <Route
           path="/update-event/:id"
           element={<UpdateEvent />}
+        />
+        <Route
+          path="/create-booking/:eventId"
+          element={<CreateBooking />}
+        />
+        <Route
+          path="/my-bookings"
+          element={<MyBookings />}
         />
 
       </Routes>

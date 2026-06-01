@@ -1,7 +1,6 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function EventCard({ event, onDelete})
- {
+function EventCard({ event, onDelete }) {
 
   const navigate = useNavigate();
 
@@ -9,10 +8,11 @@ function EventCard({ event, onDelete})
 
   const handleDelete = () => {
 
-    const confirmDelete = window.confirm( "Are you sure you want to delete this event?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this event?"
+    );
 
     if (confirmDelete) {
-
       onDelete(event.id);
     }
   };
@@ -22,30 +22,29 @@ function EventCard({ event, onDelete})
 
       <p>
         <strong>Event ID:</strong>
-        {event.id}
+         {event.id}
       </p>
 
       <h2>{event.title}</h2>
 
       <p>
-        <strong>Description:</strong>
+        <strong>Description:</strong> 
         {event.description}
-
       </p>
 
       <p>
         <strong>Location:</strong>
-        {event.location}
+         {event.location}
       </p>
 
       <p>
-        <strong>Date:</strong>
+        <strong>Date:</strong> 
         {event.eventDate}
       </p>
 
       <p>
-        <strong>Price:</strong>
-        ₹{event.price}
+        <strong>Price:</strong> 
+        {event.price}
       </p>
 
       <p>
@@ -54,30 +53,44 @@ function EventCard({ event, onDelete})
       </p>
 
       <p>
-        <strong>Total Seats:</strong>
+        <strong>Total Seats:</strong> 
         {event.totalSeats}
       </p>
 
-      {
-        role === "Admin" && (
+      {role !== "Admin" && (
 
-          <div className="admin-buttons">
+        <button
+          className="book-btn"
+          onClick={() =>
+            navigate(`/create-booking/${event.id}`)
+          }
+        >
+          Book Seats
+        </button>
 
-            <button
-              onClick={() => navigate(`/update-event/${event.id}`) }
-            >
-              Update Event
-            </button>
+      )}
 
-            <button
-              onClick={handleDelete}
-            >
-              Delete Event
-            </button>
+      {role === "Admin" && (
 
-          </div>
-        )
-      }
+        <div className="admin-buttons">
+
+          <button
+            onClick={() =>
+              navigate(`/update-event/${event.id}`)
+            }
+          >
+            Update Event
+          </button>
+
+          <button
+            onClick={handleDelete}
+          >
+            Delete Event
+          </button>
+
+        </div>
+
+      )}
 
     </div>
   );
