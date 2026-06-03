@@ -30,7 +30,7 @@ function CreateBooking() {
 
       console.log(error);
 
-      alert("Booking Failed");
+      alert("Booking Failed because the number of seats booked exceeds the available seats.");
     }
   };
 
