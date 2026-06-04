@@ -6,35 +6,24 @@ import { toast } from "react-toastify";
 
 import "../styles/Event.css";
 
-import {
-  getMyBookings,
-  updateBooking,
-  deleteBooking
+import { getMyBookings, updateBooking, deleteBooking
 } from "../services/bookingService";
 
 function MyBookings() {
 
-  const [bookings, setBookings] =
-    useState([]);
+  const [bookings, setBookings] = useState([]);
 
-  const navigate =
-    useNavigate();
+  const navigate = useNavigate();
 
   const loadBookings = async () => {
 
     try {
 
-      const response =
-        await getMyBookings();
+      const response = await getMyBookings();
 
-      console.log(
-        "Bookings:",
-        response
-      );
+      console.log( "Bookings:",response);
 
-      setBookings(
-        response || []
-      );
+      setBookings( response || [] );
 
     }
     catch (error) {
