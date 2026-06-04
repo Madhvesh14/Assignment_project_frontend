@@ -4,7 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
+import { toast } from "react-toastify";
+
 function Register() {
+
   const [fullName, setFullName] = useState("");
 
   const [email, setEmail] = useState("");
@@ -16,10 +19,13 @@ function Register() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:5226/api/auth/register",
+
+      const response = await axios.post(
+        "http://localhost:5226/api/auth/register",
         {
           fullName,
           emailId: email,
@@ -28,21 +34,29 @@ function Register() {
         }
       );
 
-      alert(
-        "Registration Successful"
-      );
+      toast.success(response.data);
 
       navigate("/login");
-    } catch (error) {
-      alert("Registration Failed");
+
+    }
+    catch (error) {
+
+      console.log(error);
+
+      toast.error(
+        error.response?.data ||
+        "Registration Failed"
+      );
     }
   };
 
   return (
     <div className="form-container">
+
       <h2>Register</h2>
 
       <form onSubmit={handleSubmit}>
+
         <input
           type="text"
           placeholder="Enter full name"
@@ -93,7 +107,9 @@ function Register() {
         <button type="submit">
           Register
         </button>
+
       </form>
+
     </div>
   );
 }

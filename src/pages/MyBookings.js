@@ -1,26 +1,43 @@
 import { useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
+
+import { toast } from "react-toastify";
+
 import "../styles/Event.css";
 
-import { getMyBookings, updateBooking,deleteBooking} from "../services/bookingService";
+import {
+  getMyBookings,
+  updateBooking,
+  deleteBooking
+} from "../services/bookingService";
 
 function MyBookings() {
 
-  const [bookings, setBookings] = useState([]);
+  const [bookings, setBookings] =
+    useState([]);
 
-  const navigate = useNavigate();
+  const navigate =
+    useNavigate();
 
   const loadBookings = async () => {
 
     try {
 
-      const response = await getMyBookings();
+      const response =
+        await getMyBookings();
 
-      console.log("Bookings:", response);
+      console.log(
+        "Bookings:",
+        response
+      );
 
-      setBookings(response || []);
+      setBookings(
+        response || []
+      );
 
-    } catch (error) {
+    }
+    catch (error) {
 
       console.log(error);
 
@@ -41,61 +58,94 @@ function MyBookings() {
       booking.seatsBooked
     );
 
-    if (!seats) return;
+    if (!seats) {
+
+      return;
+    }
 
     try {
 
-      await updateBooking(
-        booking.id,
-        {
-          eventId: booking.eventId,
-          seatsBooked: Number(seats)
-        }
-      );
+      const response =
+        await updateBooking(
+          booking.id,
+          {
+            eventId:
+              booking.eventId,
 
-      alert("Booking Updated");
+            seatsBooked:
+              Number(seats)
+          }
+        );
+
+      toast.success(
+        response
+      );
 
       loadBookings();
 
-    } catch (error) {
+    }
+    catch (error) {
 
       console.log(error);
 
-      alert("Update Failed");
+      toast.error(
+        error.response?.data ||
+        "Update Failed"
+      );
     }
   };
 
   const handleDelete = async (id) => {
 
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this booking?"
-    );
+    const confirmDelete =
+      window.confirm(
+        "Are you sure you want to delete this booking?"
+      );
 
-    if (!confirmDelete) return;
+    if (!confirmDelete) {
+
+      return;
+    }
 
     try {
 
-      await deleteBooking(id);
+      const response =
+        await deleteBooking(id);
+
+      toast.success(
+        response
+      );
 
       const updatedBookings =
         bookings.filter(
-          booking => booking.id !== id
+          booking =>
+            booking.id !== id
         );
 
-      setBookings(updatedBookings);
+      setBookings(
+        updatedBookings
+      );
 
-      if (updatedBookings.length === 0) {
+      if (
+        updatedBookings.length === 0
+      ) {
 
-        alert("No bookings left");
+        toast.info(
+          "No bookings left"
+        );
 
         navigate("/events");
       }
 
-    } catch (error) {
+    }
+    catch (error) {
 
       console.log(error);
 
-      alert("Delete Failed");
+      toast.error(
+        error.response?.data ||
+        "Delete Failed"
+      );
     }
   };
 
@@ -108,71 +158,91 @@ function MyBookings() {
       {
         bookings.length === 0 ? (
 
-          <p>No bookings found.</p>
+          <p>
+            No bookings found.
+          </p>
 
         ) : (
 
-          bookings.map((booking) => (
+          bookings.map(
+            (booking) => (
 
-            <div
-              key={booking.id}
-              className="booking-card"
-            >
+              <div
+                key={booking.id}
+                className="booking-card"
+              >
 
-              <h3>{booking.eventTitle}</h3>
+                <h3>
+                  {booking.eventTitle}
+                </h3>
 
-              <p>
-                <strong>Booking ID:</strong>{" "}
-                {booking.id}
-              </p>
+                <p>
+                  <strong>
+                    Booking ID:
+                  </strong>{" "}
+                  {booking.id}
+                </p>
 
-              <p>
-                <strong>Seats Booked:</strong>{" "}
-                {booking.seatsBooked}
-              </p>
+                <p>
+                  <strong>
+                    Seats Booked:
+                  </strong>{" "}
+                  {booking.seatsBooked}
+                </p>
 
-              <p>
-                <strong>Booking Date:</strong>{" "}
-                {
-                  new Date(
-                    booking.bookingDate
-                  ).toLocaleString()
-                }
-              </p>
-
-              <p>
-                <strong>Status:</strong>{" "}
-                {
-                  booking.status ||
-                  "Confirmed"
-                }
-              </p>
-
-              <div className="booking-actions">
-
-                <button
-                  className="update-btn"
-                  onClick={() =>
-                    handleUpdate(booking)
+                <p>
+                  <strong>
+                    Booking Date:
+                  </strong>{" "}
+                  {
+                    new Date(
+                      booking.bookingDate
+                    ).toLocaleString()
                   }
-                >
-                  Update
-                </button>
+                </p>
 
-                <button
-                  className="delete-btn"
-                  onClick={() =>
-                    handleDelete(booking.id)
+                <p>
+                  <strong>
+                    Status:
+                  </strong>{" "}
+                  {
+                    booking.status ||
+                    "Confirmed"
                   }
+                </p>
+
+                <div
+                  className="booking-actions"
                 >
-                  Delete
-                </button>
+
+                  <button
+                    className="update-btn"
+                    onClick={() =>
+                      handleUpdate(
+                        booking
+                      )
+                    }
+                  >
+                    Update
+                  </button>
+
+                  <button
+                    className="delete-btn"
+                    onClick={() =>
+                      handleDelete(
+                        booking.id
+                      )
+                    }
+                  >
+                    Delete
+                  </button>
+
+                </div>
 
               </div>
 
-            </div>
-
-          ))
+            )
+          )
 
         )
       }

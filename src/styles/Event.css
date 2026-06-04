@@ -262,3 +262,18 @@
 
   background-color: #b02a37;
 }
+
+/* Searching event by id */
+.no-events {
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.no-events h3 {
+  color: red;
+}
+
+.no-events p {
+  color: #555;
+}

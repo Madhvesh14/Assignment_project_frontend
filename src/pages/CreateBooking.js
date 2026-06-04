@@ -1,5 +1,8 @@
 import { useState } from "react";
+
 import { useNavigate, useParams } from "react-router-dom";
+
+import { toast } from "react-toastify";
 
 import { createBooking } from "../services/bookingService";
 
@@ -9,7 +12,8 @@ function CreateBooking() {
 
   const navigate = useNavigate();
 
-  const [seatsBooked, setSeatsBooked] = useState("");
+  const [seatsBooked, setSeatsBooked] =
+    useState("");
 
   const handleSubmit = async (e) => {
 
@@ -17,20 +21,25 @@ function CreateBooking() {
 
     try {
 
-      await createBooking({
-        eventId: Number(eventId),
-        seatsBooked: Number(seatsBooked)
-      });
+      const response =
+        await createBooking({
+          eventId: Number(eventId),
+          seatsBooked: Number(seatsBooked)
+        });
 
-      alert("Booking Successful");
+      toast.success(response);
 
       navigate("/my-bookings");
 
-    } catch (error) {
+    }
+    catch (error) {
 
       console.log(error);
 
-      alert("Booking Failed because the number of seats booked exceeds the available seats.");
+      toast.error(
+        error.response?.data ||
+        "Booking Failed"
+      );
     }
   };
 

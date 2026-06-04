@@ -2,7 +2,9 @@ import { useState } from "react";
 
 import axios from "axios";
 
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import { toast } from "react-toastify";
 
 function AddEvent() {
 
@@ -21,7 +23,10 @@ function AddEvent() {
 
   const handleChange = (e) => {
 
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -30,19 +35,23 @@ function AddEvent() {
 
     try {
 
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token");
 
-      await axios.post("http://localhost:5226/api/events", formData,
-        {
-          headers: {
-            Authorization:
-              `Bearer ${token}`
+      const response =
+        await axios.post(
+          "http://localhost:5226/api/events",
+          formData,
+          {
+            headers: {
+              Authorization:
+                `Bearer ${token}`
+            }
           }
-        }
-      );
+        );
 
-      alert(
-        "Event Added Successfully"
+      toast.success(
+        response.data
       );
 
       navigate("/events");
@@ -50,7 +59,10 @@ function AddEvent() {
     }
     catch (error) {
 
-      alert(
+      console.log(error);
+
+      toast.error(
+        error.response?.data ||
         "Failed to add event"
       );
     }
