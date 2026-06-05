@@ -1,10 +1,14 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
+import { toast } from "react-toastify";
+
 import EventCard from "../components/EventCard";
+
+import ConfirmModal from "../components/ConfirmModal";
 
 import "../styles/Event.css";
 
@@ -22,13 +26,21 @@ function Events() {
   const [searchId, setSearchId] =
     useState("");
 
+  const [showDeleteModal, setShowDeleteModal] =
+    useState(false);
+
+  const [selectedEventId, setSelectedEventId] =
+    useState(null);
+
   const navigate = useNavigate();
 
-  const role = localStorage.getItem("role");
+  const role =
+    localStorage.getItem("role");
 
   useEffect(() => {
 
-    const token = localStorage.getItem("token");
+    const token =
+      localStorage.getItem("token");
 
     if (!token) {
 
@@ -48,7 +60,8 @@ function Events() {
       const token =
         localStorage.getItem("token");
 
-      const response = await axios.get(
+      const response =
+        await axios.get(
           "http://localhost:5226/api/events",
           {
             headers: {
@@ -58,7 +71,8 @@ function Events() {
           }
         );
 
-      const sortedEvents = response.data.sort(
+      const sortedEvents =
+        response.data.sort(
           (a, b) => a.id - b.id
         );
 
@@ -79,30 +93,33 @@ function Events() {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
 
-    const confirmDelete =window.confirm("Are you sure you want to delete this event?");
+    setSelectedEventId(id);
 
-    if (!confirmDelete) {
+    setShowDeleteModal(true);
+  };
 
-      return;
-    }
+  const confirmDelete = async () => {
 
     try {
 
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token");
 
-      await axios.delete(`http://localhost:5226/api/events/${id}`,
-        {
-          headers: {
-            Authorization:
-              `Bearer ${token}`
+      const response =
+        await axios.delete(
+          `http://localhost:5226/api/events/${selectedEventId}`,
+          {
+            headers: {
+              Authorization:
+                `Bearer ${token}`
+            }
           }
-        }
-      );
+        );
 
-      alert(
-        "Event Deleted Successfully"
+      toast.success(
+        response.data
       );
 
       fetchEvents();
@@ -110,14 +127,27 @@ function Events() {
     }
     catch (error) {
 
-      alert(
+      console.log(error);
+
+      toast.error(
+        error.response?.data ||
         "Delete failed"
       );
     }
+    finally {
+
+      setShowDeleteModal(false);
+
+      setSelectedEventId(null);
+    }
   };
 
-  const filteredEvents = searchId === "" ? events : events.filter(
-          (event) => event.id === Number(searchId)
+  const filteredEvents =
+    searchId === ""
+      ? events
+      : events.filter(
+          (event) =>
+            event.id === Number(searchId)
         );
 
   if (loading) {
@@ -131,6 +161,7 @@ function Events() {
   }
 
   return (
+
     <div className="events-container">
 
       <h1>All Events</h1>
@@ -140,20 +171,24 @@ function Events() {
 
           <button
             className="admin-btn"
-            onClick={() => navigate("/add-event")
+            onClick={() =>
+              navigate("/add-event")
             }
           >
             Add Event
           </button>
+
         )
       }
 
       <input
         type="number"
-        placeholder=
-          "Search by Event ID"
+        placeholder="Search by Event ID"
         value={searchId}
-        onChange={(e) => setSearchId( e.target.value )
+        onChange={(e) =>
+          setSearchId(
+            e.target.value
+          )
         }
         className="search-box"
       />
@@ -161,22 +196,59 @@ function Events() {
       <div className="event-grid">
 
         {
-          filteredEvents.map((event) => (
+          filteredEvents.length > 0 ? (
 
-            <EventCard
-              key={event.id}
-              event={event}
-              onDelete={
-                handleDelete
-              }
-            />
+            filteredEvents.map(
+              (event) => (
 
-          ))
+                <EventCard
+                  key={event.id}
+                  event={event}
+                  onDelete={handleDelete}
+                />
+
+              )
+            )
+
+          ) : (
+
+            searchId !== "" && (
+
+              <div className="no-events">
+
+                <h3>
+                  No Event Found
+                </h3>
+
+                <p>
+                  No event exists with ID {searchId}
+                </p>
+
+              </div>
+
+            )
+
+          )
         }
 
       </div>
 
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        title="Delete Event"
+        message="Are you sure you want to delete this event?"
+        onConfirm={confirmDelete}
+        onCancel={() => {
+
+          setShowDeleteModal(false);
+
+          setSelectedEventId(null);
+
+        }}
+      />
+
     </div>
+
   );
 }
 

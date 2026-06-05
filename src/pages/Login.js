@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 import API from "../services/api";
 
 function Login() {
@@ -10,9 +12,6 @@ function Login() {
     useState("");
 
   const [password, setPassword] =
-    useState("");
-
-  const [message, setMessage] =
     useState("");
 
   const navigate = useNavigate();
@@ -42,8 +41,8 @@ function Login() {
         response.data.role
       );
 
-      setMessage(
-        "Login successful"
+      toast.success(
+        response.data.message
       );
 
       navigate("/events");
@@ -53,8 +52,9 @@ function Login() {
 
       console.log(error);
 
-      setMessage(
-        "Invalid credentials"
+      toast.error(
+        error.response?.data ||
+        "Invalid email or password"
       );
     }
   };
@@ -91,8 +91,6 @@ function Login() {
         </button>
 
       </form>
-
-      <p>{message}</p>
 
     </div>
   );

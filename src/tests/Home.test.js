@@ -1,29 +1,20 @@
-import {render,screen} from "@testing-library/react";
-
+import { render, screen } from "@testing-library/react";
 import Home from "../pages/Home";
 
-describe( "Home Component", () => {
+describe("Home Page", () => {
 
-    test(
-      "renders welcome heading", () => {
+  test("renders welcome message", () => {
 
-        render(<Home />);
+    render(<Home />);
 
-        const heading = screen.getByText( /welcome to event booking system/i);
+    expect(
+      screen.getByText("Welcome to Event Booking System")
+    ).toBeInTheDocument();
 
-        expect(heading).toBeInTheDocument();
-      }
-    );
+    expect(
+      screen.getByText("Book events easily online.")
+    ).toBeInTheDocument();
 
-    test(
-      "renders tagline", () => {
+  });
 
-        render(<Home />);
-
-        const text = screen.getByText(/book events easily online/i);
-
-        expect(text).toBeInTheDocument();
-      }
-    );
-  }
-);
+});

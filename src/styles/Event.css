@@ -8,6 +8,8 @@
   margin-bottom: 20px;
 }
 
+/* Search Box */
+
 .search-box {
 
   padding: 10px;
@@ -23,6 +25,8 @@
   font-size: 16px;
 }
 
+/* Event Grid */
+
 .event-grid {
 
   display: grid;
@@ -33,6 +37,8 @@
   gap: 20px;
 }
 
+/* Event Card */
+
 .event-card {
 
   border: 1px solid #ddd;
@@ -41,16 +47,18 @@
 
   padding: 20px;
 
+  background-color: white;
+
   box-shadow:
     0px 2px 8px rgba(0,0,0,0.1);
-
-  background-color: white;
 }
 
 .event-card h2 {
 
   margin-bottom: 10px;
 }
+
+/* Add Event Button */
 
 .admin-btn {
 
@@ -71,6 +79,13 @@
   margin-bottom: 20px;
 }
 
+.admin-btn:hover {
+
+  background-color: darkgreen;
+}
+
+/* Admin Buttons */
+
 .admin-buttons {
 
   display: flex;
@@ -82,7 +97,7 @@
 
 .admin-buttons button {
 
-  padding: 8px 15px;
+  padding: 10px 15px;
 
   border: none;
 
@@ -90,10 +105,24 @@
 
   cursor: pointer;
 
-  background-color: #007bff;
-
   color: white;
 }
+
+/* Update Event Button */
+
+.admin-buttons button:first-child {
+
+  background-color: #007bff;
+}
+
+/* Delete Event Button */
+
+.admin-buttons button:last-child {
+
+  background-color: #dc3545;
+}
+
+/* Event Form */
 
 .event-form {
 
@@ -130,4 +159,140 @@
   border-radius: 5px;
 
   cursor: pointer;
+}
+
+/* Book Seats Button */
+
+.book-btn {
+
+  background-color: green;
+
+  color: white;
+
+  border: none;
+
+  padding: 10px 15px;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  margin-top: 10px;
+}
+
+.book-btn:hover {
+
+  background-color: darkgreen;
+}
+
+/* Booking Card */
+
+.booking-card {
+
+  border: 1px solid #ddd;
+
+  border-radius: 10px;
+
+  padding: 20px;
+
+  margin-bottom: 20px;
+
+  background-color: white;
+
+  box-shadow:
+    0px 2px 8px rgba(0,0,0,0.1);
+}
+
+.booking-card h3 {
+
+  margin-top: 0;
+}
+
+/* Booking Actions */
+
+.booking-actions {
+
+  display: flex;
+
+  gap: 10px;
+
+  margin-top: 15px;
+}
+
+/* Update Booking Button */
+
+.update-btn {
+
+  background-color: #007bff;
+
+  color: white;
+
+  border: none;
+
+  padding: 10px 15px;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+}
+
+.update-btn:hover {
+
+  background-color: #0056b3;
+}
+
+/* Delete Booking Button */
+
+.delete-btn {
+
+  background-color: #dc3545;
+
+  color: white;
+
+  border: none;
+
+  padding: 10px 15px;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+
+  background-color: #b02a37;
+}
+
+/* Searching event by id */
+
+.no-events {
+
+  text-align: center;
+
+  padding: 30px;
+
+  margin-top: 20px;
+
+  background-color: #fff5f5;
+
+  border: 1px solid #ffcccc;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0px 2px 8px rgba(0,0,0,0.1);
+}
+
+.no-events h3 {
+
+  color: #dc3545;
+
+  margin-bottom: 10px;
+}
+
+.no-events p {
+
+  color: #555;
+
+  font-size: 16px;
 }

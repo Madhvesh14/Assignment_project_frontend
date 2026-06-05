@@ -1,51 +1,76 @@
-import {render,screen} from "@testing-library/react";
-
-import {BrowserRouter} from "react-router-dom";
-
+import { render, screen, fireEvent } from "@testing-library/react";
 import EventCard from "../components/EventCard";
+import { MemoryRouter } from "react-router-dom";
 
-describe("EventCard Component", () => {
+const mockNavigate = jest.fn();
 
-    const mockEvent = {
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: () => mockNavigate
+}));
 
-      id: 1,
+describe("EventCard", () => {
 
-      title:
-        "Music Show",
+  const event = {
+    id: 1,
+    title: "Music Concert",
+    description: "Live music",
+    location: "Bangalore",
+    eventDate: "2026-06-10",
+    price: 500,
+    availableSeats: 50,
+    totalSeats: 100
+  };
 
-      description:
-        "Live concert",
+  test("renders event details", () => {
 
-      location:
-        "Bangalore",
+    localStorage.setItem("role", "User");
 
-      eventDate:
-        "2026-05-29",
-
-      price: 500,
-
-      availableSeats: 100,
-
-      totalSeats: 150
-    };
-
-    test("renders event title", () => {
-
-        render(
-          <BrowserRouter>
-
-            <EventCard
-              event={mockEvent}
-              onDelete={() => {}}
-            />
-
-          </BrowserRouter>
-        );
-
-        const title = screen.getByText(/music show/i);
-
-        expect(title).toBeInTheDocument();
-      }
+    render(
+      <MemoryRouter>
+        <EventCard event={event}/>
+      </MemoryRouter>
     );
-  }
-);
+
+    expect(screen.getByText("Music Concert"))
+      .toBeInTheDocument();
+
+    expect(screen.getByText(/Live music/i))
+      .toBeInTheDocument();
+  });
+
+  test("book seats button visible for user", () => {
+
+    localStorage.setItem("role", "User");
+
+    render(
+      <MemoryRouter>
+        <EventCard event={event}/>
+      </MemoryRouter>
+    );
+
+    expect(
+      screen.getByText("Book Seats")
+    ).toBeInTheDocument();
+  });
+
+  test("admin buttons visible for admin", () => {
+
+    localStorage.setItem("role", "Admin");
+
+    render(
+      <MemoryRouter>
+        <EventCard event={event}/>
+      </MemoryRouter>
+    );
+
+    expect(
+      screen.getByText("Update Event")
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText("Delete Event")
+    ).toBeInTheDocument();
+  });
+
+});

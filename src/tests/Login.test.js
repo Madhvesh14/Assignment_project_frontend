@@ -1,50 +1,31 @@
 import { render, screen } from "@testing-library/react";
-
-import { BrowserRouter } from "react-router-dom";
-
 import Login from "../pages/Login";
+import { MemoryRouter } from "react-router-dom";
 
-describe("Login Component", () => {
+describe("Login Page", () => {
 
-  test("renders login heading", () => {
-
-    render(
-      <BrowserRouter>
-        <Login />
-      </BrowserRouter>
-    );
-
-    const heading = screen.getByRole("heading", {
-      name: /login/i,
-    });
-
-    expect(heading).toBeInTheDocument();
-  });
-
-  test("renders email input", () => {
+  test("renders login form", () => {
 
     render(
-      <BrowserRouter>
+      <MemoryRouter>
         <Login />
-      </BrowserRouter>
+      </MemoryRouter>
     );
 
-    const emailInput = screen.getByPlaceholderText(/enter email/i);
+    expect(
+      screen.getByPlaceholderText("Enter email")
+    ).toBeInTheDocument();
 
-    expect(emailInput).toBeInTheDocument();
-  });
+    expect(
+      screen.getByPlaceholderText("Enter password")
+    ).toBeInTheDocument();
 
-  test("renders password input", () => {
+    expect(
+      screen.getByRole("heading", {
+        name: /login/i
+      })
+    ).toBeInTheDocument();
 
-    render(
-      <BrowserRouter>
-        <Login />
-      </BrowserRouter>
-    );
-
-    const passwordInput = screen.getByPlaceholderText(/enter password/i);
-
-    expect(passwordInput).toBeInTheDocument();
   });
 
 });

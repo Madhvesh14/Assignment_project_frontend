@@ -1,8 +1,10 @@
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 import axios from "axios";
 
-import { useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { toast } from "react-toastify";
 
 function UpdateEvent() {
 
@@ -21,7 +23,11 @@ function UpdateEvent() {
       price: ""
     });
 
-  useEffect(() => { fetchEvent(); }, []);
+  useEffect(() => {
+
+    fetchEvent();
+
+  }, []);
 
   const fetchEvent = async () => {
 
@@ -31,7 +37,8 @@ function UpdateEvent() {
         localStorage.getItem("token");
 
       const response =
-        await axios.get( `http://localhost:5226/api/events/${id}`,
+        await axios.get(
+          `http://localhost:5226/api/events/${id}`,
           {
             headers: {
               Authorization:
@@ -47,7 +54,10 @@ function UpdateEvent() {
     }
     catch (error) {
 
-      alert(
+      console.log(error);
+
+      toast.error(
+        error.response?.data ||
         "Failed to load event"
       );
     }
@@ -71,24 +81,33 @@ function UpdateEvent() {
       const token =
         localStorage.getItem("token");
 
-      await axios.put( `http://localhost:5226/api/events/${id}`,
-        formData,
-        {
-          headers: {
-            Authorization:
-              `Bearer ${token}`
+      const response =
+        await axios.put(
+          `http://localhost:5226/api/events/${id}`,
+          formData,
+          {
+            headers: {
+              Authorization:
+                `Bearer ${token}`
+            }
           }
-        }
-      );
+        );
 
-      alert("Event Updated Successfully");
+      toast.success(
+        response.data
+      );
 
       navigate("/events");
 
     }
     catch (error) {
 
-      alert("Update failed" );
+      console.log(error);
+
+      toast.error(
+        error.response?.data ||
+        "Update failed"
+      );
     }
   };
 

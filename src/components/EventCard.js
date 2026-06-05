@@ -1,23 +1,13 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function EventCard({ event, onDelete})
- {
+function EventCard({ event, onDelete }) {
 
   const navigate = useNavigate();
 
   const role = localStorage.getItem("role");
 
-  const handleDelete = () => {
-
-    const confirmDelete = window.confirm( "Are you sure you want to delete this event?");
-
-    if (confirmDelete) {
-
-      onDelete(event.id);
-    }
-  };
-
   return (
+
     <div className="event-card">
 
       <p>
@@ -30,7 +20,6 @@ function EventCard({ event, onDelete})
       <p>
         <strong>Description:</strong>
         {event.description}
-
       </p>
 
       <p>
@@ -45,7 +34,7 @@ function EventCard({ event, onDelete})
 
       <p>
         <strong>Price:</strong>
-        ₹{event.price}
+        {event.price}
       </p>
 
       <p>
@@ -58,28 +47,45 @@ function EventCard({ event, onDelete})
         {event.totalSeats}
       </p>
 
-      {
-        role === "Admin" && (
+      {role !== "Admin" && (
 
-          <div className="admin-buttons">
+        <button
+          className="book-btn"
+          onClick={() =>
+            navigate(`/create-booking/${event.id}`)
+          }
+        >
+          Book Seats
+        </button>
 
-            <button
-              onClick={() => navigate(`/update-event/${event.id}`) }
-            >
-              Update Event
-            </button>
+      )}
 
-            <button
-              onClick={handleDelete}
-            >
-              Delete Event
-            </button>
+      {role === "Admin" && (
 
-          </div>
-        )
-      }
+        <div className="admin-buttons">
+
+          <button
+            onClick={() =>
+              navigate(`/update-event/${event.id}`)
+            }
+          >
+            Update Event
+          </button>
+
+          <button
+            onClick={() =>
+              onDelete(event.id)
+            }
+          >
+            Delete Event
+          </button>
+
+        </div>
+
+      )}
 
     </div>
+
   );
 }
 
