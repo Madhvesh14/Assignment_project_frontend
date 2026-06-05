@@ -264,16 +264,35 @@
 }
 
 /* Searching event by id */
+
 .no-events {
+
   text-align: center;
-  padding: 20px;
+
+  padding: 30px;
+
   margin-top: 20px;
+
+  background-color: #fff5f5;
+
+  border: 1px solid #ffcccc;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0px 2px 8px rgba(0,0,0,0.1);
 }
 
 .no-events h3 {
-  color: red;
+
+  color: #dc3545;
+
+  margin-bottom: 10px;
 }
 
 .no-events p {
+
   color: #555;
+
+  font-size: 16px;
 }

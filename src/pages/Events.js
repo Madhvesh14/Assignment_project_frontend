@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 
 import EventCard from "../components/EventCard";
 
+import ConfirmModal from "../components/ConfirmModal";
+
 import "../styles/Event.css";
 
 function Events() {
@@ -24,13 +26,21 @@ function Events() {
   const [searchId, setSearchId] =
     useState("");
 
+  const [showDeleteModal, setShowDeleteModal] =
+    useState(false);
+
+  const [selectedEventId, setSelectedEventId] =
+    useState(null);
+
   const navigate = useNavigate();
 
-  const role = localStorage.getItem("role");
+  const role =
+    localStorage.getItem("role");
 
   useEffect(() => {
 
-    const token = localStorage.getItem("token");
+    const token =
+      localStorage.getItem("token");
 
     if (!token) {
 
@@ -83,17 +93,14 @@ function Events() {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
 
-    const confirmDelete =
-      window.confirm(
-        "Are you sure you want to delete this event?"
-      );
+    setSelectedEventId(id);
 
-    if (!confirmDelete) {
+    setShowDeleteModal(true);
+  };
 
-      return;
-    }
+  const confirmDelete = async () => {
 
     try {
 
@@ -102,7 +109,7 @@ function Events() {
 
       const response =
         await axios.delete(
-          `http://localhost:5226/api/events/${id}`,
+          `http://localhost:5226/api/events/${selectedEventId}`,
           {
             headers: {
               Authorization:
@@ -127,6 +134,12 @@ function Events() {
         "Delete failed"
       );
     }
+    finally {
+
+      setShowDeleteModal(false);
+
+      setSelectedEventId(null);
+    }
   };
 
   const filteredEvents =
@@ -148,6 +161,7 @@ function Events() {
   }
 
   return (
+
     <div className="events-container">
 
       <h1>All Events</h1>
@@ -184,15 +198,17 @@ function Events() {
         {
           filteredEvents.length > 0 ? (
 
-            filteredEvents.map((event) => (
+            filteredEvents.map(
+              (event) => (
 
-               <EventCard
+                <EventCard
                   key={event.id}
                   event={event}
                   onDelete={handleDelete}
-               />
+                />
 
-            ))
+              )
+            )
 
           ) : (
 
@@ -200,22 +216,39 @@ function Events() {
 
               <div className="no-events">
 
-                <h3>No Event Found</h3>
+                <h3>
+                  No Event Found
+                </h3>
 
                 <p>
-                   No event exists with ID {searchId}
+                  No event exists with ID {searchId}
                 </p>
 
-               </div>
+              </div>
 
-               )
+            )
 
           )
         }
 
       </div>
 
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        title="Delete Event"
+        message="Are you sure you want to delete this event?"
+        onConfirm={confirmDelete}
+        onCancel={() => {
+
+          setShowDeleteModal(false);
+
+          setSelectedEventId(null);
+
+        }}
+      />
+
     </div>
+
   );
 }
 

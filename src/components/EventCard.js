@@ -6,44 +6,34 @@ function EventCard({ event, onDelete }) {
 
   const role = localStorage.getItem("role");
 
-  const handleDelete = () => {
-
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this event?"
-    );
-
-    if (confirmDelete) {
-      onDelete(event.id);
-    }
-  };
-
   return (
+
     <div className="event-card">
 
       <p>
         <strong>Event ID:</strong>
-         {event.id}
+        {event.id}
       </p>
 
       <h2>{event.title}</h2>
 
       <p>
-        <strong>Description:</strong> 
+        <strong>Description:</strong>
         {event.description}
       </p>
 
       <p>
         <strong>Location:</strong>
-         {event.location}
+        {event.location}
       </p>
 
       <p>
-        <strong>Date:</strong> 
+        <strong>Date:</strong>
         {event.eventDate}
       </p>
 
       <p>
-        <strong>Price:</strong> 
+        <strong>Price:</strong>
         {event.price}
       </p>
 
@@ -53,7 +43,7 @@ function EventCard({ event, onDelete }) {
       </p>
 
       <p>
-        <strong>Total Seats:</strong> 
+        <strong>Total Seats:</strong>
         {event.totalSeats}
       </p>
 
@@ -83,7 +73,9 @@ function EventCard({ event, onDelete }) {
           </button>
 
           <button
-            onClick={handleDelete}
+            onClick={() =>
+              onDelete(event.id)
+            }
           >
             Delete Event
           </button>
@@ -93,6 +85,7 @@ function EventCard({ event, onDelete }) {
       )}
 
     </div>
+
   );
 }
 

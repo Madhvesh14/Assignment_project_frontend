@@ -6,24 +6,56 @@ import { toast } from "react-toastify";
 
 import "../styles/Event.css";
 
-import { getMyBookings, updateBooking, deleteBooking
+import "../styles/ConfirmModal.css";
+
+import ConfirmModal from "../components/ConfirmModal";
+
+import {
+  getMyBookings,
+  updateBooking,
+  deleteBooking
 } from "../services/bookingService";
 
 function MyBookings() {
 
-  const [bookings, setBookings] = useState([]);
+  const [bookings, setBookings] =
+    useState([]);
+
+  // Delete Modal States
+  const [showDeleteModal, setShowDeleteModal] =
+    useState(false);
+
+  const [selectedBookingId, setSelectedBookingId] =
+    useState(null);
+
+  // Update Modal States
+  const [showUpdateModal, setShowUpdateModal] =
+    useState(false);
+
+  const [selectedBooking, setSelectedBooking] =
+    useState(null);
+
+  const [newSeatCount, setNewSeatCount] =
+    useState("");
 
   const navigate = useNavigate();
 
+  // Load Bookings
   const loadBookings = async () => {
 
     try {
 
-      const response = await getMyBookings();
+      const response =
+        await getMyBookings();
 
-      console.log( "Bookings:",response);
+      console.log(
+        "Bookings:",
+        response
+      );
 
-      setBookings( response || [] );
+      setBookings(
+        response || []
+      );
 
     }
     catch (error) {
@@ -40,29 +72,34 @@ function MyBookings() {
 
   }, []);
 
-  const handleUpdate = async (booking) => {
+  // Open Update Modal
+  const handleUpdate = (booking) => {
 
-    const seats = prompt(
-      "Enter new seat count",
+    setSelectedBooking(
+      booking
+    );
+
+    setNewSeatCount(
       booking.seatsBooked
     );
 
-    if (!seats) {
+    setShowUpdateModal(true);
+  };
 
-      return;
-    }
+  // Confirm Update
+  const confirmUpdateBooking = async () => {
 
     try {
 
       const response =
         await updateBooking(
-          booking.id,
+          selectedBooking.id,
           {
             eventId:
-              booking.eventId,
+              selectedBooking.eventId,
 
             seatsBooked:
-              Number(seats)
+              Number(newSeatCount)
           }
         );
 
@@ -71,6 +108,8 @@ function MyBookings() {
       );
 
       loadBookings();
+
+      setShowUpdateModal(false);
 
     }
     catch (error) {
@@ -81,25 +120,28 @@ function MyBookings() {
         error.response?.data ||
         "Update Failed"
       );
+
+      setShowUpdateModal(false);
     }
   };
 
-  const handleDelete = async (id) => {
+  // Open Delete Modal
+  const handleDelete = (id) => {
 
-    const confirmDelete =
-      window.confirm(
-        "Are you sure you want to delete this booking?"
-      );
+    setSelectedBookingId(id);
 
-    if (!confirmDelete) {
+    setShowDeleteModal(true);
+  };
 
-      return;
-    }
+  // Confirm Delete
+  const confirmDeleteBooking = async () => {
 
     try {
 
       const response =
-        await deleteBooking(id);
+        await deleteBooking(
+          selectedBookingId
+        );
 
       toast.success(
         response
@@ -108,12 +150,15 @@ function MyBookings() {
       const updatedBookings =
         bookings.filter(
           booking =>
-            booking.id !== id
+            booking.id !==
+            selectedBookingId
         );
 
       setBookings(
         updatedBookings
       );
+
+      setShowDeleteModal(false);
 
       if (
         updatedBookings.length === 0
@@ -135,6 +180,8 @@ function MyBookings() {
         error.response?.data ||
         "Delete Failed"
       );
+
+      setShowDeleteModal(false);
     }
   };
 
@@ -232,6 +279,77 @@ function MyBookings() {
 
             )
           )
+
+        )
+      }
+
+      {/* Delete Confirmation Modal */}
+
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        message="Are you sure you want to delete this booking?"
+        onConfirm={
+          confirmDeleteBooking
+        }
+        onCancel={() =>
+          setShowDeleteModal(false)
+        }
+      />
+
+      {/* Update Booking Modal */}
+
+      {
+        showUpdateModal && (
+
+          <div className="modal-overlay">
+
+            <div className="modal">
+
+              <h3>
+                Update Booking
+              </h3>
+
+              <p>
+                Enter new seat count
+              </p>
+
+              <input
+                type="number"
+                value={newSeatCount}
+                onChange={(e) =>
+                  setNewSeatCount(
+                    e.target.value
+                  )
+                }
+                min="1"
+                className="modal-input"
+              />
+
+              <div className="modal-buttons">
+
+                <button
+                  className="cancel-btn"
+                  onClick={() =>
+                    setShowUpdateModal(false)
+                  }
+                >
+                  Cancel
+                </button>
+
+                <button
+                  className="confirm-btn"
+                  onClick={
+                    confirmUpdateBooking
+                  }
+                >
+                  Update
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
 
         )
       }
