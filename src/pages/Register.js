@@ -57,52 +57,74 @@ function Register() {
 
       <form onSubmit={handleSubmit}>
 
-        <input
-          type="text"
-          placeholder="Enter full name"
-          value={fullName}
-          onChange={(e) =>
+        <div className= "form-group">
+
+          <label>Full Name</label>
+
+          <input
+           type="text"
+           placeholder="Enter full name"
+           value={fullName}
+           onChange={(e) =>
             setFullName(e.target.value)
-          }
-          required
-        />
+           }
+           required
+         />
+        </div>
 
-        <input
-          type="email"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) =>
+
+        <div className= "form-group">
+
+          <label>Email</label> 
+
+          <input
+           type="email"
+           placeholder="Enter email"
+           value={email}
+           onChange={(e) =>
             setEmail(e.target.value)
-          }
-          required
-        />
+           }
+           required
+         />
 
-        <input
-          type="password"
-          placeholder="Enter password"
-          value={password}
-          onChange={(e) =>
+        </div>
+
+
+        <div className= "form-group">
+
+          <label>Password</label>   
+          <input
+            type="password"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) =>
             setPassword(e.target.value)
-          }
-          required
-        />
+            }
+            required
+         />
+        </div>
 
-        <select
-          value={roleId}
-          onChange={(e) =>
-            setRoleId(
-              Number(e.target.value)
-            )
-          }
-        >
-          <option value={1}>
-            Admin
-          </option>
 
-          <option value={2}>
-            User
-          </option>
-        </select>
+        <div className= "form-group">
+
+          <label>Role</label>
+          <select
+            value={roleId}
+            onChange={(e) =>
+              setRoleId(
+                Number(e.target.value)
+              )
+            }
+          >
+            <option value={1}>
+              Admin
+            </option>
+
+            <option value={2}>
+              User
+            </option>
+          </select>
+        </div>
 
         <button type="submit">
           Register

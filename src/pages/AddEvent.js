@@ -78,60 +78,83 @@ function AddEvent() {
         onSubmit={handleSubmit}
       >
 
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          onChange={handleChange}
-          required
-        />
+        <div className= "form-group">
+          <label>Title</label>
 
-        <input
-          type="text"
-          name="description"
-          placeholder="Description"
-          onChange={handleChange}
-          required
-        />
+            <input
+              type="text"
+              name="title"
+              placeholder="Title"
+              onChange={handleChange}
+              required
+            />
+        </div>    
 
-        <input
-          type="text"
-          name="location"
-          placeholder="Location"
-          onChange={handleChange}
-          required
-        />
+        <div className="form-group">
+          <label>Description</label>
+          <input
+            type="text"
+            name="description"
+            placeholder="Description"
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <input
-          type="datetime-local"
-          name="eventDate"
-          onChange={handleChange}
-          required
-        />
+        <div className="form-group">
+          <label>Location</label>
+          <input
+            type="text"
+            name="location"
+            placeholder="Location"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        
 
-        <input
-          type="number"
-          name="totalSeats"
-          placeholder="Total Seats"
-          onChange={handleChange}
-          required
-        />
+        <div className="form-group">
+          <label>Event Date</label>
+          <input
+            type="datetime-local"
+            name="eventDate"
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <input
-          type="number"
-          name="availableSeats"
-          placeholder="Available Seats"
-          onChange={handleChange}
-          required
-        />
+        <div className="form-group">
+          <label>Total Seats</label>
+          <input
+            type="number"
+            name="totalSeats"
+            placeholder="Total Seats"
+            onChange={handleChange}
+            required
+          />
+        </div>      
 
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          onChange={handleChange}
-          required
-        />
+        <div className="form-group">
+          <label>Available Seats</label>
+          <input
+            type="number"
+            name="availableSeats"
+            placeholder="Available Seats"
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Price</label>
+          <input
+            type="number"
+            name="price"
+            placeholder="Price"
+            onChange={handleChange}
+            required
+          />
+        </div>
 
         <button type="submit">
           Add Event
