@@ -51,15 +51,19 @@ function CreateBooking() {
 
       <form onSubmit={handleSubmit}>
 
-        <input
-          type="number"
-          placeholder="Number of Seats"
-          value={seatsBooked}
-          onChange={(e) =>
-            setSeatsBooked(e.target.value)
-          }
-          required
-        />
+          <div className="form-group">
+            <label>Enter the Number of Seats:</label>
+
+            <input
+              type="number"
+              placeholder="Number of Seats"
+              value={seatsBooked}
+              onChange={(e) =>
+              setSeatsBooked(e.target.value)
+              }
+              required
+            />
+          </div>  
 
         <button type="submit">
           Book

@@ -65,26 +65,35 @@ function Login() {
       <h2>Login</h2>
 
       <form onSubmit={handleSubmit}>
+          <div className= "form-group">
+            <label>Email:</label>
 
-        <input
-          type="email"
-          placeholder="Enter email"
-          value={emailId}
-          onChange={(e) =>
-            setEmailId(e.target.value)
-          }
-          required
-        />
 
-        <input
-          type="password"
-          placeholder="Enter password"
-          value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
-          required
-        />
+            <input
+              type="email"
+              placeholder="Enter email"
+              value={emailId}
+              onChange={(e) =>
+                setEmailId(e.target.value)
+              }
+              required
+            />
+
+          </div>
+
+          <div className= "form-group">
+            <label>Password:</label>  
+
+            <input
+            type="password"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
+            required
+          />
+          </div>
 
         <button type="submit">
           Login
