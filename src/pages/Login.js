@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 
 import API from "../services/api";
 
+import { Link } from "react-router-dom";
+
 function Login() {
 
   const [emailId, setEmailId] =
@@ -98,6 +100,18 @@ function Login() {
         <button type="submit">
           Login
         </button>
+
+        <p className= "register-link">
+          Don't have an account?{" "}
+          <Link to= "/register">
+            Register
+          </Link>
+        </p>
+
+        
+
+
+
 
       </form>
 

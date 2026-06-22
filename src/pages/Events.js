@@ -10,6 +10,8 @@ import EventCard from "../components/EventCard";
 
 import ConfirmModal from "../components/ConfirmModal";
 
+import { searchEventsByTitle } from "../services/eventService";
+
 import "../styles/Event.css";
 
 function Events() {
@@ -23,7 +25,7 @@ function Events() {
   const [error, setError] =
     useState("");
 
-  const [searchId, setSearchId] =
+  const [searchTitle, setSearchTitle] =
     useState("");
 
   const [showDeleteModal, setShowDeleteModal] =
@@ -34,13 +36,11 @@ function Events() {
 
   const navigate = useNavigate();
 
-  const role =
-    localStorage.getItem("role");
+  const role = localStorage.getItem("role");
 
   useEffect(() => {
 
-    const token =
-      localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     if (!token) {
 
@@ -52,6 +52,26 @@ function Events() {
     fetchEvents();
 
   }, []);
+
+
+  useEffect(() => {
+    
+    const delaySearch = setTimeout(() => {
+      
+      if (searchTitle.trim() ===""){
+       
+        fetchEvents();
+      
+      } else {
+       
+        handleSearch();
+      
+      }
+    }, 500);
+
+    return() => clearTimeout(delaySearch)
+
+  }, [searchTitle]);
 
   const fetchEvents = async () => {
 
@@ -91,6 +111,30 @@ function Events() {
 
       setLoading(false);
     }
+  };
+
+  const handleSearch = async() => {
+    try {
+      
+      const token = localStorage.getItem("token");
+
+      const response = await searchEventsByTitle(searchTitle, token);
+
+      const sortedEvents =
+        response.data.sort(
+          (a, b) => a.id - b.id
+        );
+
+      setEvents(sortedEvents);
+
+      
+    }
+
+    catch(error){
+      console.log(error);
+
+    }
+    
   };
 
   const handleDelete = (id) => {
@@ -142,13 +186,6 @@ function Events() {
     }
   };
 
-  const filteredEvents =
-    searchId === ""
-      ? events
-      : events.filter(
-          (event) =>
-            event.id === Number(searchId)
-        );
 
   if (loading) {
 
@@ -182,23 +219,25 @@ function Events() {
       }
 
       <input
-        type="number"
-        placeholder="Search by Event ID"
-        value={searchId}
+        type="text"
+        placeholder="Search by Event Title"
+        value={searchTitle}
         onChange={(e) =>
-          setSearchId(
+          setSearchTitle(
             e.target.value
           )
         }
         className="search-box"
       />
 
+      
+
       <div className="event-grid">
 
         {
-          filteredEvents.length > 0 ? (
+          events.length > 0 ? (
 
-            filteredEvents.map(
+            events.map(
               (event) => (
 
                 <EventCard
@@ -212,7 +251,7 @@ function Events() {
 
           ) : (
 
-            searchId !== "" && (
+            searchTitle !== "" && (
 
               <div className="no-events">
 
@@ -221,7 +260,7 @@ function Events() {
                 </h3>
 
                 <p>
-                  No event exists with ID {searchId}
+                  No event exists with title "{searchTitle}"
                 </p>
 
               </div>
