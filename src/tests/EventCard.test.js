@@ -12,7 +12,7 @@ jest.mock("react-router-dom", () => ({
 describe("EventCard", () => {
 
   const event = {
-    id: 1,
+    
     title: "Music Concert",
     description: "Live music",
     location: "Bangalore",

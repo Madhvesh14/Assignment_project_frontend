@@ -10,10 +10,7 @@ function EventCard({ event, onDelete }) {
 
     <div className="event-card">
 
-      <p>
-        <strong>Event ID:</strong>
-        {event.id}
-      </p>
+      
 
       <h2>{event.title}</h2>
 

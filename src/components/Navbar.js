@@ -23,7 +23,7 @@ function Navbar() {
     <nav className="navbar">
 
       <h2 className="logo">
-        Event Booking
+        Event Booking System
       </h2>
 
       <div className="navbar-right">

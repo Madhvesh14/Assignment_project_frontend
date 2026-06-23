@@ -10,11 +10,7 @@ import "../styles/ConfirmModal.css";
 
 import ConfirmModal from "../components/ConfirmModal";
 
-import {
-  getMyBookings,
-  updateBooking,
-  deleteBooking
-} from "../services/bookingService";
+import { getMyBookings, updateBooking, deleteBooking } from "../services/bookingService";
 
 function MyBookings() {
 
