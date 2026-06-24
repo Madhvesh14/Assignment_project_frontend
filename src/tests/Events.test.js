@@ -1,13 +1,22 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Events from "../pages/Events";
-import axios from "axios";
 
-jest.mock("axios");
+import {
+  getAllEvents,
+  searchEventsByTitle,
+  deleteEvent
+} from "../services/eventService";
 
-jest.mock("../components/EventCard", () => () =>
+jest.mock("../services/eventService");
+
+jest.mock("../components/EventCard", () => () => (
   <div>Mock Event Card</div>
-);
+));
+
+jest.mock("../components/ConfirmModal", () => () => (
+  <div>Mock Confirm Modal</div>
+));
 
 describe("Events Page", () => {
 
@@ -15,7 +24,9 @@ describe("Events Page", () => {
 
     localStorage.setItem("token", "abc");
 
-    axios.get.mockResolvedValue({
+    localStorage.setItem("role", "User");
+
+    getAllEvents.mockResolvedValue({
       data: [
         {
           id: 1,
@@ -30,6 +41,19 @@ describe("Events Page", () => {
       ]
     });
 
+    searchEventsByTitle.mockResolvedValue({
+      data: []
+    });
+
+    deleteEvent.mockResolvedValue({
+      data: "Event Deleted Successfully"
+    });
+
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    localStorage.clear();
   });
 
   test("renders events heading", async () => {
@@ -42,6 +66,20 @@ describe("Events Page", () => {
 
     expect(
       await screen.findByText("All Events")
+    ).toBeInTheDocument();
+
+  });
+
+  test("renders event card", async () => {
+
+    render(
+      <MemoryRouter>
+        <Events />
+      </MemoryRouter>
+    );
+
+    expect(
+      await screen.findByText("Mock Event Card")
     ).toBeInTheDocument();
 
   });

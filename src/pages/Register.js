@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import axios from "axios";
+import { registerUser } from "../services/authService";
 
 import { toast } from "react-toastify";
 
@@ -24,8 +24,7 @@ function Register() {
 
     try {
 
-      const response = await axios.post(
-        "http://localhost:5226/api/auth/register",
+      const response = await registerUser(
         {
           fullName,
           emailId: email,

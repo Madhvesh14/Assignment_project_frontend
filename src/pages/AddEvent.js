@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-import axios from "axios";
-
 import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
+
+import { addEvent } from "../services/eventService";
 
 function AddEvent() {
 
@@ -35,21 +35,9 @@ function AddEvent() {
 
     try {
 
-      const token =
-        localStorage.getItem("token");
-
       const response =
-        await axios.post(
-          "http://localhost:5226/api/events",
-          formData,
-          {
-            headers: {
-              Authorization:
-                `Bearer ${token}`
-            }
-          }
-        );
-
+        await addEvent(formData);
+        
       toast.success(
         response.data
       );

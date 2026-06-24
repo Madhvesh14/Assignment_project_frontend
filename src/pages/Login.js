@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
-import API from "../services/api";
+import {loginUser}from "../services/authService";
 
 import { Link } from "react-router-dom";
 
@@ -24,9 +24,7 @@ function Login() {
 
     try {
 
-      const response =
-        await API.post(
-          "/Auth/login",
+      const response = await loginUser(
           {
             emailId,
             password
