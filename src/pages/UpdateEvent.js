@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-import axios from "axios";
-
 import { useNavigate, useParams } from "react-router-dom";
 
 import { toast } from "react-toastify";
+
+import { getEventById,updateEvent } from "../services/eventService";
 
 function UpdateEvent() {
 
@@ -33,19 +33,7 @@ function UpdateEvent() {
 
     try {
 
-      const token =
-        localStorage.getItem("token");
-
-      const response =
-        await axios.get(
-          `http://localhost:5226/api/events/${id}`,
-          {
-            headers: {
-              Authorization:
-                `Bearer ${token}`
-            }
-          }
-        );
+      const response = await getEventById(id);
 
       setFormData(
         response.data
@@ -78,20 +66,7 @@ function UpdateEvent() {
 
     try {
 
-      const token =
-        localStorage.getItem("token");
-
-      const response =
-        await axios.put(
-          `http://localhost:5226/api/events/${id}`,
-          formData,
-          {
-            headers: {
-              Authorization:
-                `Bearer ${token}`
-            }
-          }
-        );
+      const response = await updateEvent(id,formData)
 
       toast.success(
         response.data

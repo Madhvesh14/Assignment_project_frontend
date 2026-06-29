@@ -1,15 +1,63 @@
-import axios from "axios";
-
-const API_URL =
-  "http://localhost:5226/api/events";
+import API from "./api";
 
 export const getAllEvents = async () => {
-  return await axios.get(API_URL);
+  const token = localStorage.getItem("token");
+
+    return await API.get("/events", {
+       headers: {
+        Authorization: `Bearer ${token}`
+       }
+  });
 };
 
-export const searchEventsByTitle = async (title, token) => {
-  return await axios.get(
-   `${API_URL}/search?title=${title}`, 
+export const getEventById = async (id) => {
+   const token = localStorage.getItem("token");
+    
+   return await API.get(`/events/${id}`, {
+       headers: {
+        Authorization: `Bearer ${token}`
+       }
+  });
+}; 
+
+
+export const addEvent = async(eventData) => {
+  const token = localStorage.getItem("token");
+
+  return await API.post("/events", eventData, {
+       headers: {
+        Authorization: `Bearer ${token}`
+       }
+  });
+};
+
+
+export const updateEvent = async (id, eventData) => {
+  const token = localStorage.getItem("token");
+
+  return await API.put(`/events/${id}`, eventData, {
+       headers: {
+        Authorization: `Bearer ${token}`
+       }
+  });  
+};
+
+
+export const deleteEvent =  async(id) => {
+  const token = localStorage.getItem("token");
+
+  return await API.delete(`/events/${id}`, {
+       headers: {
+        Authorization: `Bearer ${token}`
+       }
+  });  
+};
+
+
+export const searchEventsByTitle = async (title) => {
+  const token = localStorage.getItem("token")
+    
+  return await API.get(`/events/search?title=${title}`, 
    {
     headers: {
       Authorization: `Bearer ${token}`

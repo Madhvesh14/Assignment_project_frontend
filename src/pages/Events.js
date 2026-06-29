@@ -2,15 +2,13 @@ import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import axios from "axios";
-
 import { toast } from "react-toastify";
 
 import EventCard from "../components/EventCard";
 
 import ConfirmModal from "../components/ConfirmModal";
 
-import { searchEventsByTitle } from "../services/eventService";
+import { getAllEvents, searchEventsByTitle, deleteEvent } from "../services/eventService";
 
 import "../styles/Event.css";
 
@@ -77,19 +75,7 @@ function Events() {
 
     try {
 
-      const token =
-        localStorage.getItem("token");
-
-      const response =
-        await axios.get(
-          "http://localhost:5226/api/events",
-          {
-            headers: {
-              Authorization:
-                `Bearer ${token}`
-            }
-          }
-        );
+      const response = await getAllEvents();
 
       const sortedEvents =
         response.data.sort(
@@ -116,9 +102,8 @@ function Events() {
   const handleSearch = async() => {
     try {
       
-      const token = localStorage.getItem("token");
 
-      const response = await searchEventsByTitle(searchTitle, token);
+      const response = await searchEventsByTitle(searchTitle);
 
       const sortedEvents =
         response.data.sort(
@@ -148,19 +133,8 @@ function Events() {
 
     try {
 
-      const token =
-        localStorage.getItem("token");
-
-      const response =
-        await axios.delete(
-          `http://localhost:5226/api/events/${selectedEventId}`,
-          {
-            headers: {
-              Authorization:
-                `Bearer ${token}`
-            }
-          }
-        );
+      const response = await deleteEvent(selectedEventId);
+        
 
       toast.success(
         response.data
