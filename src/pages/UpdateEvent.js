@@ -35,8 +35,7 @@ function UpdateEvent() {
 
       const response = await getEventById(id);
 
-      setFormData(
-        response.data
+      setFormData(response.data
       );
 
     }
@@ -45,8 +44,7 @@ function UpdateEvent() {
       console.log(error);
 
       toast.error(
-        error.response?.data ||
-        "Failed to load event"
+        error.response?.data || "Failed to load event"
       );
     }
   };
@@ -68,8 +66,7 @@ function UpdateEvent() {
 
       const response = await updateEvent(id,formData)
 
-      toast.success(
-        response.data
+      toast.success(response.data
       );
 
       navigate("/events");
@@ -80,118 +77,125 @@ function UpdateEvent() {
       console.log(error);
 
       toast.error(
-        error.response?.data ||
-        "Update failed"
+        error.response?.data || "Update failed"
       );
     }
   };
 
   return (
-    <div className="events-container">
+    <div className="min-h-screen bg-gray-100 py-10">
+      <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-8">
+        <h1 className="text-3xl font-bold text-center mb-8">
+          Update Event
+        </h1>
 
-      <h1>Update Event</h1>
-
-      <form
-        className="event-form"
-        onSubmit={handleSubmit}
-      >
-
-        <div className="form-group">
-
-          <label>Title</label>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700">
+              Title
+            </label>
 
             <input
-             type="text"
-             name="title"
-             value={formData.title}
-             onChange={handleChange}
-           />
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+            />
+          </div>
 
-        </div>
-
-
-        <div className="form-group">
-          <label>Description</label>   
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700">
+              Description
+            </label>
 
             <input
               type="text"
               name="description"
               value={formData.description}
               onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
             />
-        </div>   
+          </div>
 
-
-        <div className="form-group">
-
-          <label>Location</label> 
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700">
+              Location
+            </label>
 
             <input
               type="text"
               name="location"
               value={formData.location}
               onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
             />
+          </div>
 
-        </div>
-
-        <div className="form-group">
-
-          <label>Event Date</label>    
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700">
+              Event Date
+            </label>
 
             <input
               type="datetime-local"
               name="eventDate"
               value={formData.eventDate}
               onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
             />
-        </div>
+          </div>
 
-
-        <div className="form-group">
-
-          <label>Total Seats</label>    
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700">
+              Total Seats
+            </label>
 
             <input
               type="number"
               name="totalSeats"
               value={formData.totalSeats}
               onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
             />
+          </div>
 
-        </div>
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700">
+              Available Seats
+            </label>
 
-
-
-        <div className="form-group">
-
-          <label>Available Seats</label>
             <input
               type="number"
               name="availableSeats"
               value={formData.availableSeats}
               onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
             />
+          </div>
 
-        </div>
-
-        <div className="form-group">    
-          <label>Price</label>    
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700">
+              Price
+            </label>
 
             <input
               type="number"
               name="price"
               value={formData.price}
               onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
             />
-        </div>    
+          </div>
 
-        <button type="submit">
-          Update Event
-        </button>
-
-      </form>
-
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-3 rounded-md font-semibold hover:bg-blue-700 transition duration-300"
+          >
+            Update Event
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
