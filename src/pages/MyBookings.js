@@ -161,8 +161,8 @@ function MyBookings() {
 
    return (
     <div className="min-h-screen bg-gray-100 py-10">
-      <div className="max-w-5xl mx-auto px-6">
-        <h1 className="text-3xl font-bold mb-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center md:text-left">
           My Bookings
         </h1>
 
@@ -177,13 +177,13 @@ function MyBookings() {
             {bookings.map((booking) => (
               <div
                 key={booking.id}
-                className="bg-white rounded-lg shadow-md p-6"
+                className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-5 sm:p-6"
               >
                 <h3 className="text-2xl font-semibold mb-4">
                   {booking.eventTitle}
                 </h3>
 
-                <div className="space-y-2 text-gray-700">
+                <div className="space-y-3 text-gray-700 text-sm sm:text-base">
                   <p>
                     <strong>Booking ID:</strong>{" "}
                     {booking.id}
@@ -207,12 +207,12 @@ function MyBookings() {
                   </p>
                 </div>
 
-                <div className="flex gap-4 mt-6">
+                <div className="flex flex-col sm:flex-row gap-3 mt-6">
                   <button
                     onClick={() =>
                       handleUpdate(booking)
                     }
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-md font-medium transition"
+                    className="bg-blue-600 hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all duration-300 text-white font-medium rounded-lg  px-6 py-2 w-full sm:w-auto"
                   >
                     Update
                   </button>
@@ -221,7 +221,7 @@ function MyBookings() {
                     onClick={() =>
                       handleDelete(booking.id)
                     }
-                    className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-md font-medium transition"
+                    className="bg-red-600 hover:bg-red-700 hover:scale-105 active:scale-95 transition-all duration-300 text-white rounded-lg  px-6 py-2 w-full sm:w-auto"
                   >
                     Delete
                   </button>
@@ -241,8 +241,8 @@ function MyBookings() {
 
         {/* Update Booking Modal */}
         {showUpdateModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg shadow-xl w-96 p-6">
+          <div className="fixed inset-0 bg-black/60 backdrop-blur sm flex items-center justify-center p-4 z-50 transition-all duration-300">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 animate-fadeIn">
               <h3 className="text-xl font-bold mb-3">
                 Update Booking
               </h3>
@@ -258,10 +258,10 @@ function MyBookings() {
                 onChange={(e) =>
                   setNewSeatCount(e.target.value)
                 }
-                className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               />
 
-              <div className="flex justify-end gap-3 mt-6">
+              <div className="flex flex-col sm:flex-row justify-center gap-3 mt-6">
                 <button
                   onClick={() =>
                     setShowUpdateModal(false)

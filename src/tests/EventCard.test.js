@@ -1,26 +1,31 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import EventCard from "../components/EventCard";
 import { MemoryRouter } from "react-router-dom";
+import EventCard from "../components/EventCard";
 
 const mockNavigate = jest.fn();
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
-  useNavigate: () => mockNavigate
+  useNavigate: () => mockNavigate,
 }));
 
-describe("EventCard", () => {
+describe("EventCard Component", () => {
 
   const event = {
-    
-    title: "Music Concert",
-    description: "Live music",
+    id: 1,
+    title: "React Conference",
+    description: "Learn React",
     location: "Bangalore",
-    eventDate: "2026-06-10",
+    eventDate: "2026-07-20",
     price: 500,
-    availableSeats: 50,
-    totalSeats: 100
+    availableSeats: 25,
+    totalSeats: 50,
   };
+
+  beforeEach(() => {
+    localStorage.clear();
+    mockNavigate.mockClear();
+  });
 
   test("renders event details", () => {
 
@@ -28,49 +33,150 @@ describe("EventCard", () => {
 
     render(
       <MemoryRouter>
-        <EventCard event={event}/>
+        <EventCard
+          event={event}
+          onDelete={jest.fn()}
+        />
       </MemoryRouter>
     );
 
-    expect(screen.getByText("Music Concert"))
-      .toBeInTheDocument();
+    expect(
+      screen.getByText("React Conference")
+    ).toBeInTheDocument();
 
-    expect(screen.getByText(/Live music/i))
-      .toBeInTheDocument();
+    expect(
+      screen.getByText(/Learn React/)
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText(/Bangalore/)
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText(/25/)
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText(/50/)
+    ).toBeInTheDocument();
   });
 
-  test("book seats button visible for user", () => {
+  test("shows Book Seats button for User", () => {
 
     localStorage.setItem("role", "User");
 
     render(
       <MemoryRouter>
-        <EventCard event={event}/>
+        <EventCard
+          event={event}
+          onDelete={jest.fn()}
+        />
       </MemoryRouter>
     );
 
     expect(
-      screen.getByText("Book Seats")
+      screen.getByRole("button", {
+        name: /Book Seats/i,
+      })
     ).toBeInTheDocument();
   });
 
-  test("admin buttons visible for admin", () => {
+  test("navigates to booking page when Book Seats clicked", () => {
+
+    localStorage.setItem("role", "User");
+
+    render(
+      <MemoryRouter>
+        <EventCard
+          event={event}
+          onDelete={jest.fn()}
+        />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: /Book Seats/i,
+      })
+    );
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      "/create-booking/1"
+    );
+  });
+
+  test("shows Update and Delete buttons for Admin", () => {
 
     localStorage.setItem("role", "Admin");
 
     render(
       <MemoryRouter>
-        <EventCard event={event}/>
+        <EventCard
+          event={event}
+          onDelete={jest.fn()}
+        />
       </MemoryRouter>
     );
 
     expect(
-      screen.getByText("Update Event")
+      screen.getByRole("button", {
+        name: /Update/i,
+      })
     ).toBeInTheDocument();
 
     expect(
-      screen.getByText("Delete Event")
+      screen.getByRole("button", {
+        name: /Delete/i,
+      })
     ).toBeInTheDocument();
+  });
+
+  test("navigates to update page when Update clicked", () => {
+
+    localStorage.setItem("role", "Admin");
+
+    render(
+      <MemoryRouter>
+        <EventCard
+          event={event}
+          onDelete={jest.fn()}
+        />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: /Update/i,
+      })
+    );
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      "/update-event/1"
+    );
+  });
+
+  test("calls onDelete when Delete clicked", () => {
+
+    localStorage.setItem("role", "Admin");
+
+    const onDelete = jest.fn();
+
+    render(
+      <MemoryRouter>
+        <EventCard
+          event={event}
+          onDelete={onDelete}
+        />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: /Delete/i,
+      })
+    );
+
+    expect(onDelete).toHaveBeenCalledWith(1);
   });
 
 });

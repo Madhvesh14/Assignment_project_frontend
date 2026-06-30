@@ -7,7 +7,7 @@ function EventCard({ event, onDelete }) {
   const role = localStorage.getItem("role");
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+    <div className="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:-translate-y-2  hover:shadow-2xl hover:scale-[1.02]">
       <h2 className="text-2xl font-bold mb-4">
         {event.title}
       </h2>

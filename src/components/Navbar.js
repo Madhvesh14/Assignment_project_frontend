@@ -26,7 +26,7 @@ function Navbar() {
         <div className="flex items-center gap-6">
           <Link
             to="/"
-            className="hover:text-yellow-300 transition text-2xl"
+            className="text-white font-medium transition-all duration-300 hover:text-yellow-300 hover:scale-110"
           >
             Home
           </Link>
@@ -35,15 +35,15 @@ function Navbar() {
             <>
               <Link
                 to="/events"
-                className="hover:text-yellow-300 transition text-2xl"
-              >
+                className="text-white font-medium transition-all duration-300 hover:text-yellow-300 hover:scale-110"
+          >
                 Events
               </Link>
 
               <Link
                 to="/my-bookings"
-                className="hover:text-yellow-300 transition text-2xl"
-              >
+                className="text-white font-medium transition-all duration-300 hover:text-yellow-300 hover:scale-110"
+          >
                 My Bookings
               </Link>
             </>
@@ -53,15 +53,15 @@ function Navbar() {
             <>
               <Link
                 to="/register"
-                className="hover:text-yellow-300 transition text-2xl"
-              >
+                className="text-white font-medium transition-all duration-300 hover:text-yellow-300 hover:scale-110"
+          >
                 Register
               </Link>
 
               <Link
                 to="/login"
-                className="hover:text-yellow-300 transition text-2xl"
-              >
+                className="text-white font-medium transition-all duration-300 hover:text-yellow-300 hover:scale-110"
+          >
                 Login
               </Link>
             </>
