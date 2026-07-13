@@ -10,27 +10,19 @@ import ConfirmModal from "../components/ConfirmModal";
 
 import { getAllEvents, searchEventsByTitle, deleteEvent } from "../services/eventService";
 
-import "../styles/Event.css";
-
 function Events() {
 
-  const [events, setEvents] =
-    useState([]);
+  const [events, setEvents] = useState([]);
 
-  const [loading, setLoading] =
-    useState(true);
+  const [loading, setLoading] = useState(true);
 
-  const [error, setError] =
-    useState("");
+  const [error, setError] = useState("");
 
-  const [searchTitle, setSearchTitle] =
-    useState("");
+  const [searchTitle, setSearchTitle] = useState("");
 
-  const [showDeleteModal, setShowDeleteModal] =
-    useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const [selectedEventId, setSelectedEventId] =
-    useState(null);
+  const [selectedEventId, setSelectedEventId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -136,9 +128,7 @@ function Events() {
       const response = await deleteEvent(selectedEventId);
         
 
-      toast.success(
-        response.data
-      );
+      toast.success(response.data);
 
       fetchEvents();
 
@@ -148,8 +138,7 @@ function Events() {
       console.log(error);
 
       toast.error(
-        error.response?.data ||
-        "Delete failed"
+        error.response?.data || "Delete failed"
       );
     }
     finally {
@@ -173,15 +162,17 @@ function Events() {
 
   return (
 
-    <div className="events-container">
+    <div className="max-w-7xl mx-auto p-8">
 
-      <h1>All Events</h1>
+      <h1 className="text-4xl font-bold mb-8">
+        All Events
+      </h1>
 
       {
         role === "Admin" && (
 
           <button
-            className="admin-btn"
+            className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-md font-semibold transition mb-6"
             onClick={() =>
               navigate("/add-event")
             }
@@ -196,17 +187,13 @@ function Events() {
         type="text"
         placeholder="Search by Event Title"
         value={searchTitle}
-        onChange={(e) =>
-          setSearchTitle(
-            e.target.value
-          )
-        }
-        className="search-box"
+        onChange={(e) => setSearchTitle(e.target.value)}
+        className="w-full md:w-80 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300 mb-8"
       />
 
       
 
-      <div className="event-grid">
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 
         {
           events.length > 0 ? (
@@ -227,13 +214,13 @@ function Events() {
 
             searchTitle !== "" && (
 
-              <div className="no-events">
+              <div className="col-span-full bg-red-50 border border-red-200 rounded-lg shadow p-8 text-center">
 
-                <h3>
+                <h3 className="text-2xl font-bold text-red-600 mb-3">
                   No Event Found
                 </h3>
 
-                <p>
+                <p className="text-gray-600">
                   No event exists with title "{searchTitle}"
                 </p>
 
