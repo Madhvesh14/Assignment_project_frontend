@@ -30,17 +30,13 @@ function AddEvent() {
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     try {
 
-      const response =
-        await addEvent(formData);
+      const response = await addEvent(formData);
         
-      toast.success(
-        response.data
-      );
+      toast.success(response.data);
 
       navigate("/events");
 
@@ -50,106 +46,131 @@ function AddEvent() {
       console.log(error);
 
       toast.error(
-        error.response?.data ||
-        "Failed to add event"
+        error.response?.data || "Failed to add event"
       );
     }
   };
 
-  return (
-    <div className="events-container">
+   return (
+    <div className="min-h-screen bg-gray-100 py-10">
+      <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-8">
+        <h1 className="text-3xl font-bold text-center mb-8">
+          Add Event
+        </h1>
 
-      <h1>Add Event</h1>
-
-      <form
-        className="event-form"
-        onSubmit={handleSubmit}
-      >
-
-        <div className= "form-group">
-          <label>Title</label>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700">
+              Title
+            </label>
 
             <input
               type="text"
               name="title"
-              placeholder="Title"
+              placeholder="Enter event title"
               onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
               required
             />
-        </div>    
+          </div>
 
-        <div className="form-group">
-          <label>Description</label>
-          <input
-            type="text"
-            name="description"
-            placeholder="Description"
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700">
+              Description
+            </label>
 
-        <div className="form-group">
-          <label>Location</label>
-          <input
-            type="text"
-            name="location"
-            placeholder="Location"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        
+            <input
+              type="text"
+              name="description"
+              placeholder="Enter event description"
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label>Event Date</label>
-          <input
-            type="datetime-local"
-            name="eventDate"
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700">
+              Location
+            </label>
 
-        <div className="form-group">
-          <label>Total Seats</label>
-          <input
-            type="number"
-            name="totalSeats"
-            placeholder="Total Seats"
-            onChange={handleChange}
-            required
-          />
-        </div>      
+            <input
+              type="text"
+              name="location"
+              placeholder="Enter location"
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label>Available Seats</label>
-          <input
-            type="number"
-            name="availableSeats"
-            placeholder="Available Seats"
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700">
+              Event Date
+            </label>
 
-        <div className="form-group">
-          <label>Price</label>
-          <input
-            type="number"
-            name="price"
-            placeholder="Price"
-            onChange={handleChange}
-            required
-          />
-        </div>
+            <input
+              type="datetime-local"
+              name="eventDate"
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+              required
+            />
+          </div>
 
-        <button type="submit">
-          Add Event
-        </button>
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700">
+              Total Seats
+            </label>
 
-      </form>
+            <input
+              type="number"
+              name="totalSeats"
+              placeholder="Enter total seats"
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+              required
+            />
+          </div>
 
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700">
+              Available Seats
+            </label>
+
+            <input
+              type="number"
+              name="availableSeats"
+              placeholder="Enter available seats"
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+              required
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label className="mb-2 text-sm font-semibold text-gray-700">
+              Price
+            </label>
+
+            <input
+              type="number"
+              name="price"
+              placeholder="Enter price"
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-green-600 text-white py-3 rounded-md font-semibold hover:bg-green-700 transition duration-300"
+          >
+            Add Event
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
